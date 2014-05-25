@@ -17,10 +17,12 @@ Here I provide a quick overview of the steps taken to go through the list of ins
 The process undergoes the following steps:
 
 1. Merges the training and the test sets to create one data set.
+
 * reading two respective tables from test and train folders and merging them with each other
 * note: merged data is test data first and train data second
 
 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
+
 * reading features.txt 
 * assigning the features vector to the names of the merged measurement dataset
 * searching for the mean and st. deviation variables 
@@ -28,11 +30,13 @@ The process undergoes the following steps:
 * cleaning the names (removing parentheses, dashes etc., converting to lower case)
 
 3. Uses descriptive activity names to name the activities in the data set.
+
 * reading activity labels
 * cleaning their names
 * assigning the labels to their numbers stored in merged label vector
 
 4. Appropriately labels the data set with descriptive activity names.
+
 * combining the merged subject
 * label and measurement data
 * writing it to the file 'merged_dataset.txt'
