@@ -67,7 +67,7 @@ tidyDataset$subject <- rep(1:length(unique(mergedDataset$subject)),
 tidyDataset$activity <- rep(unique(mergedDataset$activity), length(unique(mergedDataset$subject)))
 
 ## In order to calculate all the appropriate means we need to go over the mergedDataset
-## subsetting it by the respective subject and activity and calling RowMeans
+## subsetting it by the respective subject and activity and calling colMeans
 for (i in 1:nrow(tidyDataset)) {
     reqIndices <- which(mergedDataset$subject == tidyDataset$subject[i] & 
                             mergedDataset$activity == tidyDataset$activity[i])
