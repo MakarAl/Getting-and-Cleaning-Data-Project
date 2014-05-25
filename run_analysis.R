@@ -22,6 +22,8 @@ temp1 <- read.table("./test/y_test.txt")
 temp2 <- read.table("./train/y_train.txt")
 mergedLabel <- rbind(temp1, temp2)
 
+remove("temp1", "temp2")
+
 ## 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
 ## reading features.txt, assigning the features vector to the names of the merged measurement 
 ## dataset, searching for the mean and st. deviation variables and subsetting the measurements
@@ -30,14 +32,14 @@ mergedLabel <- rbind(temp1, temp2)
 features <- read.table("features.txt")
 names(mergedMeasurement) <- features[,2]
 mergedMeasurement <- mergedMeasurement[,grep("mean\\(\\)|std\\(\\)", names(mergedMeasurement))]
-names(mergedMeasurement) <- tolower(gsub("-|\\(|\\)","",names(mergedMeasurement))
+names(mergedMeasurement) <- gsub("-|\\(|\\)","",tolower(names(mergedMeasurement)))
 
 ## 3. Uses descriptive activity names to name the activities in the data set.
 ## reading activity labels, cleaning their names, assigning the labels to their numbers stored
 ## in merged label vector
 
 actlabels <- read.table("activity_labels.txt")
-actlabels[,2] <- tolower(gsub("_","",actlabels[,2])
+actlabels[,2] <- gsub("_","",tolower(actlabels[,2]))
 for (i in 1:nrow(mergedLabel)) {mergedLabel[i,] <- actlabels[mergedLabel[i,],2]}
 names(mergedLabel) <- "activity"
 
@@ -69,7 +71,7 @@ tidyDataset$activity <- rep(unique(mergedDataset$activity), length(unique(merged
 for (i in 1:nrow(tidyDataset)) {
     reqIndices <- which(mergedDataset$subject == tidyDataset$subject[i] & 
                             mergedDataset$activity == tidyDataset$activity[i])
-    tidyDataset[i,3:ncol(tidyDataset)] <- rowMeans(mergedData[reqIndices,3:ncol(mergedData)])
+    tidyDataset[i,3:ncol(tidyDataset)] <- colMeans(mergedData[reqIndices,3:ncol(mergedDataset)])
 }
 
 write.table(tidyDataset,"tidy_dataset.txt")
